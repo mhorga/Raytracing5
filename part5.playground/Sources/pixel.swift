@@ -48,7 +48,8 @@ public func imageFromPixels(width: Int, _ height: Int) -> CIImage {
     let lookAt = float3()
     let cam = Camera(lookFrom: lookFrom, lookAt: lookAt, vup: float3(0, -1, 0), vfov: 15, aspect: Float(width) / Float(height))
     let world = random_scene()
-    for i in 0..<width {
+    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+    dispatch_apply(width, queue) { i in
         for j in 0..<height {
             var col = float3()
             let ns = 10
